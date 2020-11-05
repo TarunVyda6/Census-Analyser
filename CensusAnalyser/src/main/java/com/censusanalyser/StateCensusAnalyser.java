@@ -23,8 +23,6 @@ public class StateCensusAnalyser
 	public int loadStatesCSVData(String stateCensusCsvFilePath) throws CensusAnalyserException
 	{
 
-		int noOfStates = 0;
-
 		String[] file = stateCensusCsvFilePath.split("[.]");
 
 		try (BufferedReader reader = Files.newBufferedReader(Paths.get(stateCensusCsvFilePath)))
@@ -38,10 +36,8 @@ public class StateCensusAnalyser
 			checkHeader(stateCensusCsvFilePath);
 
 			Iterator<CSVStateCensus> censusCSVIterator = getCSVFileIterator(reader, CSVStateCensus.class);
-			Iterable<CSVStateCensus> iterable = () -> censusCSVIterator;
-			noOfStates = (int) StreamSupport.stream(iterable.spliterator(), false).count();
 
-			return noOfStates;
+			return getCount(censusCSVIterator);
 		}
 		catch (IOException e)
 		{
@@ -62,7 +58,6 @@ public class StateCensusAnalyser
 	 */
 	public int loadStateCodeData(String stateCodeCsvFilePath) throws CensusAnalyserException
 	{
-		int noOfStates = 0;
 		String[] file = stateCodeCsvFilePath.split("[.]");
 
 		try (BufferedReader bufferedReader = Files.newBufferedReader(Path.of(stateCodeCsvFilePath)))
@@ -77,9 +72,7 @@ public class StateCensusAnalyser
 			checkHeaderStateCode(stateCodeCsvFilePath);
 
 			Iterator<CSVStateCode> stateCodeIterator = getCSVFileIterator(bufferedReader, CSVStateCode.class);
-			Iterable<CSVStateCode> iterable = () -> stateCodeIterator;
-			noOfStates = (int) StreamSupport.stream(iterable.spliterator(), false).count();
-			return noOfStates;
+			return getCount(stateCodeIterator);
 
 		}
 		catch (IOException e)
@@ -114,6 +107,14 @@ public class StateCensusAnalyser
 			throw new CensusAnalyserException(e.getMessage(), CensusAnalyserException.ExceptionType.WRONG_FILE_TYPE);
 		}
 
+	}
+
+	private <E> int getCount(Iterator<E> iterator)
+	{
+		int numOfEntries = 0;
+		Iterable<E> csvIterable = () -> iterator;
+		numOfEntries = (int) StreamSupport.stream(csvIterable.spliterator(), false).count();
+		return numOfEntries;
 	}
 
 	/**

@@ -14,12 +14,18 @@ public class StateCodeAnalyserTest
 
 	StateCensusAnalyser stateCensusAnalyser = new StateCensusAnalyser();
 
+	/**
+	 * TC2.1
+	 */
 	@Test
 	public void givenStateCodeCSVFile_WhenAnalyse_ShouldReturnNumberOfRecords() throws CensusAnalyserException
 	{
 		assertEquals(37, stateCensusAnalyser.loadStateCodeData(STATE_CODE_CSV_FILE_PATH));
 	}
 
+	/**
+	 * TC2.2
+	 */
 	@Test
 	public void givenStateCodeCSVFile_WhenAnalyse_ShouldThrowWrongCSVFileException()
 	{
@@ -33,6 +39,9 @@ public class StateCodeAnalyserTest
 		}
 	}
 
+	/**
+	 * TC2.3
+	 */
 	@Test
 	public void givenStateCodeCSVFileTypeIncorrect_WhenAnalyse_ShouldThrowWrongFileTypeException()
 	{
@@ -46,6 +55,9 @@ public class StateCodeAnalyserTest
 		}
 	}
 
+	/**
+	 * TC2.4
+	 */
 	@Test
 	public void givenStateCodeCSVFileWrongDelimiter_WhenAnalyse_ShouldThrowWrongDelimterFileException()
 	{
@@ -59,6 +71,9 @@ public class StateCodeAnalyserTest
 		}
 	}
 
+	/**
+	 * TC2.5
+	 */
 	@Test
 	public void givenStateCodeCSVFileWrongHeader_WhenAnalyse_ShouldThrowWrongHeaderFileException()
 	{
