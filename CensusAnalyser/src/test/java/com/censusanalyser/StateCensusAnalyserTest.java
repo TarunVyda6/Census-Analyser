@@ -7,11 +7,11 @@ import org.junit.Test;
 public class StateCensusAnalyserTest
 {
 
-	private static final String STATE_CENSUS_CSV_FILE_PATH = "E:\\javaworkspace\\IndiaStateCensusData - IndiaStateCensusData.csv";
+	private static final String STATE_CENSUS_CSV_FILE_PATH = "C:\\Users\\Tarun vyda\\git\\statecensusanalyser\\CensusAnalyser\\src\\test\\resources\\IndiaStateCensusData - IndiaStateCensusData.csv";
 	private static final String WRONG_CSV_FILE_PATH = "D:\\javaworkspace\\IndiaStateCensusData - IndiaStateCensusData.csv";
-	private static final String WRONG_FILE_TYPE = "E:\\javaworkspace\\IndiaStateCensusData - IndiaStateCensusData.xml";
-	private static final String WRONG_CSV_DELIMITER = "E:\\javaworkspace\\IndiaStateCensusData - IndiaStateCensusData - WrongDelimter.csv";
-	private static final String WRONG_CSV_HEADER = "E:\\javaworkspace\\IndiaStateCensusData - IndiaStateCensusData - WrongHeader.csv";
+	private static final String WRONG_FILE_TYPE = "C:\\Users\\Tarun vyda\\git\\statecensusanalyser\\CensusAnalyser\\src\\test\\resources\\IndiaStateCensusData - IndiaStateCensusData.txt";
+	private static final String WRONG_CSV_DELIMITER = "C:\\Users\\Tarun vyda\\git\\statecensusanalyser\\CensusAnalyser\\src\\test\\resources\\IndiaStateCensusData - IndiaStateCensusData - WrongDelimter.csv";
+	private static final String WRONG_CSV_HEADER = "C:\\Users\\Tarun vyda\\git\\statecensusanalyser\\CensusAnalyser\\src\\test\\resources\\IndiaStateCensusData - IndiaStateCensusData - WrongHeader.csv";
 
 	/**
 	 * TC1.1
@@ -44,7 +44,7 @@ public class StateCensusAnalyserTest
 	 * Tc1.3
 	 */
 	@Test
-	public void givenStateCensusCSVFile_WhenFileTypeIncorrect_ShouldThrowException()
+	public void givenStateCensusCSVFileTypeIncorrect_WhenAnalyse_ShouldThrowWrongFileTypeException()
 	{
 		try
 		{
@@ -61,7 +61,7 @@ public class StateCensusAnalyserTest
 	 * TC1.4
 	 */
 	@Test
-	public void givenStateCensusCSVFileWrongDelimiter_WhenAnalyse_ShouldThrowWrongDelimterCSVFileException()
+	public void givenStateCensusCSVFileWrongDelimiter_WhenAnalyse_ShouldThrowWrongDelimterFileException()
 	{
 		try
 		{
@@ -78,7 +78,7 @@ public class StateCensusAnalyserTest
 	 * Tc1.5
 	 */
 	@Test
-	public void givenStateCensusCSVFileWrongHeader_WhenAnalyse_ShouldThrowWrongHeaderCSVFileException()
+	public void givenStateCensusCSVFileWrongHeader_WhenAnalyse_ShouldThrowWrongHeaderFileException()
 	{
 		try
 		{
