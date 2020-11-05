@@ -35,7 +35,8 @@ public class StateCensusAnalyser
 			checkDelimiter(stateCensusCsvFilePath);
 			checkHeader(stateCensusCsvFilePath);
 
-			Iterator<CSVStateCensus> censusCSVIterator = getCSVFileIterator(reader, CSVStateCensus.class);
+			Iterator<CSVStateCensus> censusCSVIterator = new OpenCSVBuilder().getCSVFileIterator(reader,
+					CSVStateCensus.class);
 
 			return getCount(censusCSVIterator);
 		}
@@ -43,11 +44,6 @@ public class StateCensusAnalyser
 		{
 			throw new CensusAnalyserException("Incorrect csv file path",
 					CensusAnalyserException.ExceptionType.WRONG_CSV_FILE);
-		}
-
-		catch (IllegalStateException e)
-		{
-			throw new CensusAnalyserException(e.getMessage(), CensusAnalyserException.ExceptionType.WRONG_FILE_TYPE);
 		}
 	}
 
@@ -71,7 +67,8 @@ public class StateCensusAnalyser
 			checkDelimiterStateCode(stateCodeCsvFilePath);
 			checkHeaderStateCode(stateCodeCsvFilePath);
 
-			Iterator<CSVStateCode> stateCodeIterator = getCSVFileIterator(bufferedReader, CSVStateCode.class);
+			Iterator<CSVStateCode> stateCodeIterator = new OpenCSVBuilder().getCSVFileIterator(bufferedReader,
+					CSVStateCode.class);
 			return getCount(stateCodeIterator);
 
 		}
@@ -79,28 +76,6 @@ public class StateCensusAnalyser
 		{
 			throw new CensusAnalyserException("Incorrect csv file path",
 					CensusAnalyserException.ExceptionType.WRONG_CSV_FILE);
-		}
-		catch (IllegalStateException e)
-		{
-			throw new CensusAnalyserException(e.getMessage(), CensusAnalyserException.ExceptionType.WRONG_FILE_TYPE);
-		}
-
-	}
-
-	/**
-	 * @param <E>
-	 * @param reader
-	 * @param csvClass
-	 * @return Iterator interface
-	 * @throws CensusAnalyserException
-	 */
-	private <E> Iterator<E> getCSVFileIterator(Reader reader, Class csvClass) throws CensusAnalyserException
-	{
-		try
-		{
-			CsvToBeanBuilder<E> csvToBeanBuilder = new CsvToBeanBuilder<>(reader);
-			CsvToBean<E> csvToBean = csvToBeanBuilder.withType(csvClass).withIgnoreLeadingWhiteSpace(true).build();
-			return csvToBean.iterator();
 		}
 		catch (IllegalStateException e)
 		{

@@ -7,7 +7,7 @@ public class CensusAnalyserException extends Exception
 		WRONG_CSV_FILE, WRONG_FILE_TYPE, WRONG_DELIMITER, WRONG_HEADER
 	}
 
-	private ExceptionType exceptionType;
+	public ExceptionType exceptionType;
 
 	public ExceptionType getExceptionType()
 	{
