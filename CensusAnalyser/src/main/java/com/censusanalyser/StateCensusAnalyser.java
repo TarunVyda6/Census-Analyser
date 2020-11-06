@@ -35,8 +35,8 @@ public class StateCensusAnalyser
 			checkDelimiter(stateCensusCsvFilePath);
 			checkHeader(stateCensusCsvFilePath);
 
-			Iterator<CSVStateCensus> censusCSVIterator = new OpenCSVBuilder().getCSVFileIterator(reader,
-					CSVStateCensus.class);
+			ICSVBuilder csvBuilder = CSVBuilderFactory.createCSVBuilder();
+			Iterator<CSVStateCensus> censusCSVIterator = csvBuilder.getCSVFileIterator(reader, CSVStateCensus.class);
 
 			return getCount(censusCSVIterator);
 		}
@@ -66,8 +66,8 @@ public class StateCensusAnalyser
 
 			checkDelimiterStateCode(stateCodeCsvFilePath);
 			checkHeaderStateCode(stateCodeCsvFilePath);
-
-			Iterator<CSVStateCode> stateCodeIterator = new OpenCSVBuilder().getCSVFileIterator(bufferedReader,
+			ICSVBuilder csvBuilder = CSVBuilderFactory.createCSVBuilder();
+			Iterator<CSVStateCode> stateCodeIterator = csvBuilder.getCSVFileIterator(bufferedReader,
 					CSVStateCode.class);
 			return getCount(stateCodeIterator);
 
