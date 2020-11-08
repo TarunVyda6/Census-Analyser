@@ -17,7 +17,7 @@ public class StateCensusAnalyserTest
 	 * TC1.1
 	 */
 	@Test
-	public void givenStateCensusCSVFile_WhenAnalyse_ShouldReturnNoOfRecords() throws CensusAnalyserException
+	public void givenStateCensusCSVFile_WhenAnalyse_ShouldReturnNoOfRecords() throws CSVException
 	{
 		StateCensusAnalyser censusAnalyser = new StateCensusAnalyser();
 		assertEquals(29, censusAnalyser.loadStatesCSVData(STATE_CENSUS_CSV_FILE_PATH));
@@ -34,9 +34,9 @@ public class StateCensusAnalyserTest
 			StateCensusAnalyser censusAnalyzer = new StateCensusAnalyser();
 			censusAnalyzer.loadStatesCSVData(WRONG_CSV_FILE_PATH);
 		}
-		catch (CensusAnalyserException e)
+		catch (CSVException e)
 		{
-			assertEquals(CensusAnalyserException.ExceptionType.WRONG_CSV_FILE, e.getExceptionType());
+			assertEquals(CSVException.ExceptionType.WRONG_CSV_FILE, e.getExceptionType());
 		}
 	}
 
@@ -51,9 +51,9 @@ public class StateCensusAnalyserTest
 			StateCensusAnalyser censusAnalyzer = new StateCensusAnalyser();
 			censusAnalyzer.loadStatesCSVData(WRONG_FILE_TYPE);
 		}
-		catch (CensusAnalyserException e)
+		catch (CSVException e)
 		{
-			assertEquals(CensusAnalyserException.ExceptionType.WRONG_FILE_TYPE, e.getExceptionType());
+			assertEquals(CSVException.ExceptionType.WRONG_FILE_TYPE, e.getExceptionType());
 		}
 	}
 
@@ -68,9 +68,9 @@ public class StateCensusAnalyserTest
 			StateCensusAnalyser censusAnalyzer = new StateCensusAnalyser();
 			censusAnalyzer.loadStatesCSVData(WRONG_CSV_DELIMITER);
 		}
-		catch (CensusAnalyserException e)
+		catch (CSVException e)
 		{
-			assertEquals(CensusAnalyserException.ExceptionType.WRONG_DELIMITER, e.getExceptionType());
+			assertEquals(CSVException.ExceptionType.INVALIDFILEDATA, e.getExceptionType());
 		}
 	}
 
@@ -85,9 +85,9 @@ public class StateCensusAnalyserTest
 			StateCensusAnalyser censusAnalyzer = new StateCensusAnalyser();
 			censusAnalyzer.loadStatesCSVData(WRONG_CSV_HEADER);
 		}
-		catch (CensusAnalyserException e)
+		catch (CSVException e)
 		{
-			assertEquals(CensusAnalyserException.ExceptionType.WRONG_HEADER, e.getExceptionType());
+			assertEquals(CSVException.ExceptionType.INVALIDFILEDATA, e.getExceptionType());
 		}
 	}
 

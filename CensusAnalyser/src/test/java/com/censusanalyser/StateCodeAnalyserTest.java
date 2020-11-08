@@ -11,14 +11,13 @@ public class StateCodeAnalyserTest
 	private static final String WRONG_FILE_TYPE = "C:\\Users\\Tarun vyda\\git\\statecensusanalyser\\CensusAnalyser\\src\\test\\resources\\IndiaStateCode - IndiaStateCode.txt";
 	private static final String WRONG_CSV_HEADER = "C:\\Users\\Tarun vyda\\git\\statecensusanalyser\\CensusAnalyser\\src\\test\\resources\\IndiaStateCode - IndiaStateCode - HeaderWrong.csv";
 	private static final String WRONG_CSV_DELIMITER = "C:\\Users\\Tarun vyda\\git\\statecensusanalyser\\CensusAnalyser\\src\\test\\resources\\IndiaStateCode - IndiaStateCode - DelimiterWrong.csv";
-
 	StateCensusAnalyser stateCensusAnalyser = new StateCensusAnalyser();
 
 	/**
 	 * TC2.1
 	 */
 	@Test
-	public void givenStateCodeCSVFile_WhenAnalyse_ShouldReturnNumberOfRecords() throws CensusAnalyserException
+	public void givenStateCodeCSVFile_WhenAnalyse_ShouldReturnNumberOfRecords() throws CSVException
 	{
 		assertEquals(37, stateCensusAnalyser.loadStateCodeData(STATE_CODE_CSV_FILE_PATH));
 	}
@@ -33,9 +32,9 @@ public class StateCodeAnalyserTest
 		{
 			stateCensusAnalyser.loadStateCodeData(WRONG_CSV_FILE_PATH);
 		}
-		catch (CensusAnalyserException e)
+		catch (CSVException e)
 		{
-			assertEquals(CensusAnalyserException.ExceptionType.WRONG_CSV_FILE, e.getExceptionType());
+			assertEquals(CSVException.ExceptionType.WRONG_CSV_FILE, e.getExceptionType());
 		}
 	}
 
@@ -49,9 +48,9 @@ public class StateCodeAnalyserTest
 		{
 			stateCensusAnalyser.loadStateCodeData(WRONG_FILE_TYPE);
 		}
-		catch (CensusAnalyserException e)
+		catch (CSVException e)
 		{
-			assertEquals(CensusAnalyserException.ExceptionType.WRONG_FILE_TYPE, e.getExceptionType());
+			assertEquals(CSVException.ExceptionType.WRONG_FILE_TYPE, e.getExceptionType());
 		}
 	}
 
@@ -65,9 +64,9 @@ public class StateCodeAnalyserTest
 		{
 			stateCensusAnalyser.loadStateCodeData(WRONG_CSV_DELIMITER);
 		}
-		catch (CensusAnalyserException e)
+		catch (CSVException e)
 		{
-			assertEquals(CensusAnalyserException.ExceptionType.WRONG_DELIMITER, e.getExceptionType());
+			assertEquals(CSVException.ExceptionType.INVALIDFILEDATA, e.getExceptionType());
 		}
 	}
 
@@ -81,9 +80,9 @@ public class StateCodeAnalyserTest
 		{
 			stateCensusAnalyser.loadStateCodeData(WRONG_CSV_HEADER);
 		}
-		catch (CensusAnalyserException e)
+		catch (CSVException e)
 		{
-			assertEquals(CensusAnalyserException.ExceptionType.WRONG_HEADER, e.getExceptionType());
+			assertEquals(CSVException.ExceptionType.INVALIDFILEDATA, e.getExceptionType());
 		}
 	}
 }
