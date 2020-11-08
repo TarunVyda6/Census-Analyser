@@ -151,4 +151,19 @@ public class StateCensusAnalyser
 		return new Gson().toJson(censusCSVList);
 	}
 
+	/**
+	 * @param stateCensusCsvFilePath
+	 * @return string of census sorted by area
+	 * @throws CSVException
+	 */
+	public String sortCensusDataByArea(String stateCensusCsvFilePath) throws CSVException
+	{
+		loadStatesCSVData(stateCensusCsvFilePath);
+		if (censusCSVList == null || censusCSVList.size() == 0)
+			throw new CSVException("No Census data found", CSVException.ExceptionType.NO_CENSUS_DATA);
+		Collections.sort(censusCSVList, Comparator.comparing(census -> census.areaInSqKm));
+		Collections.reverse(censusCSVList);
+		return new Gson().toJson(censusCSVList);
+	}
+
 }
