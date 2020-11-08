@@ -138,6 +138,17 @@ public class StateCensusAnalyser
 
 	}
 
-	
+	/**
+	 * @param stateCensusCsvFilePath
+	 * @return string of census sorted by population Density
+	 * @throws CSVException
+	 */
+	public String sortCensusByPopulationDensity(String stateCensusCsvFilePath) throws CSVException
+	{
+		loadStatesCSVData(stateCensusCsvFilePath);
+		Collections.sort(censusCSVList, Comparator.comparing(census -> census.densityPerSqKm));
+		Collections.reverse(censusCSVList);
+		return new Gson().toJson(censusCSVList);
+	}
 
 }
