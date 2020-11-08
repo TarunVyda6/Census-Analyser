@@ -4,6 +4,8 @@ import static org.junit.Assert.assertEquals;
 
 import org.junit.Test;
 
+import com.google.gson.Gson;
+
 public class StateCensusAnalyserTest
 {
 
@@ -89,6 +91,17 @@ public class StateCensusAnalyserTest
 		{
 			assertEquals(CSVException.ExceptionType.INVALIDFILEDATA, e.getExceptionType());
 		}
+	}
+
+	@Test
+	public void givenStateCensusCSVFile_WhenAnalyse_shouldReturnSortedStates() throws CSVException
+	{
+		StateCensusAnalyser stateCensusAnalyser = new StateCensusAnalyser();
+		String sortedCensusByState = stateCensusAnalyser.sortCensusByState(STATE_CENSUS_CSV_FILE_PATH);
+		CSVStateCensus[] csvStateCensus = new Gson().fromJson(sortedCensusByState, CSVStateCensus[].class);
+		assertEquals("Andhra Pradesh", csvStateCensus[0].state);
+		assertEquals("West Bengal", csvStateCensus[csvStateCensus.length - 1].state);
+
 	}
 
 }

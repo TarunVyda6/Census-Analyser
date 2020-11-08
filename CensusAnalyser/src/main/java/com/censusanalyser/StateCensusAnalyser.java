@@ -5,9 +5,13 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.Iterator;
 import java.util.List;
 import java.util.stream.StreamSupport;
+
+import com.google.gson.Gson;
 
 public class StateCensusAnalyser
 {
@@ -87,6 +91,37 @@ public class StateCensusAnalyser
 		Iterable<E> csvIterable = () -> iterator;
 		numOfEntries = (int) StreamSupport.stream(csvIterable.spliterator(), false).count();
 		return numOfEntries;
+	}
+
+	/**
+	 * @param csvFilePath
+	 * @return string of census sorted by state
+	 * @throws CSVException
+	 */
+	public String sortCensusByState(String csvFilePath) throws CSVException
+	{
+		String[] file = csvFilePath.split("[.]");
+		try (BufferedReader reader = Files.newBufferedReader(Paths.get(csvFilePath)))
+		{
+			if (!file[1].equals("csv"))
+			{
+				throw new CSVException("Wrong File type", CSVException.ExceptionType.WRONG_FILE_TYPE);
+			}
+			List<CSVStateCensus> stateCensusList = CSVBuilderFactory.createCSVBuilder().getCSVFileList(reader,
+					CSVStateCensus.class);
+			Collections.sort(stateCensusList, Comparator.comparing(census -> census.state));
+
+			return new Gson().toJson(stateCensusList);
+		}
+		catch (IOException e)
+		{
+			throw new CSVException("Incorrect csv file path", CSVException.ExceptionType.WRONG_CSV_FILE);
+		}
+		catch (RuntimeException e)
+		{
+			throw new CSVException(e.getCause().getMessage(), CSVException.ExceptionType.INVALIDFILEDATA);
+		}
+
 	}
 
 }
