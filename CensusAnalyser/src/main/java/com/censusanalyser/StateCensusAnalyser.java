@@ -17,6 +17,7 @@ public class StateCensusAnalyser
 {
 
 	private List<CSVStateCensus> censusCSVList;
+	private List<CSVStateCode> stateCodeList;
 
 	/**
 	 * @param stateCensusCsvFilePath
@@ -67,9 +68,8 @@ public class StateCensusAnalyser
 			}
 
 			ICSVBuilder csvBuilder = CSVBuilderFactory.createCSVBuilder();
-			Iterator<CSVStateCode> stateCodeIterator = csvBuilder.getCSVFileIterator(bufferedReader,
-					CSVStateCode.class);
-			return getCount(stateCodeIterator);
+			stateCodeList = csvBuilder.getCSVFileList(bufferedReader, CSVStateCode.class);
+			return stateCodeList.size();
 
 		}
 		catch (IOException e)
@@ -108,6 +108,20 @@ public class StateCensusAnalyser
 		Collections.sort(censusCSVList, Comparator.comparing(census -> census.state));
 		return new Gson().toJson(censusCSVList);
 
+	}
+
+	/**
+	 * @param stateCodeCsvFilePath
+	 * @return string of census sorted by state code
+	 * @throws CSVException
+	 */
+	public String sortStateCodeDataByStateCode(String stateCodeCsvFilePath) throws CSVException
+	{
+		loadStateCodeData(stateCodeCsvFilePath);
+		if (stateCodeList == null || stateCodeList.size() == 0)
+			throw new CSVException("No Census data found", CSVException.ExceptionType.NO_CENSUS_DATA);
+		Collections.sort(stateCodeList, Comparator.comparing(census -> census.stateCode));
+		return new Gson().toJson(stateCodeList);
 	}
 
 }
