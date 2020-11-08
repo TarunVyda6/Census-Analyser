@@ -124,4 +124,18 @@ public class StateCensusAnalyser
 		return new Gson().toJson(stateCodeList);
 	}
 
+	/**
+	 * @param stateCensusCsvFilePath
+	 * @return string of census sorted by population
+	 * @throws CSVException
+	 */
+	public String sortCensusByPopulationInDescending(String stateCensusCsvFilePath) throws CSVException
+	{
+		loadStatesCSVData(stateCensusCsvFilePath);
+		Collections.sort(censusCSVList, Comparator.comparing(census -> census.population));
+		Collections.reverse(censusCSVList);
+		return new Gson().toJson(censusCSVList);
+
+	}
+
 }
