@@ -4,7 +4,7 @@ public class CSVException extends Exception
 {
 	public enum ExceptionType
 	{
-		WRONG_CSV_FILE, WRONG_FILE_TYPE, INVALIDFILEDATA;
+		WRONG_CSV_FILE, WRONG_FILE_TYPE, INVALIDFILEDATA, NO_CENSUS_DATA;
 	}
 
 	public ExceptionType exceptionType;

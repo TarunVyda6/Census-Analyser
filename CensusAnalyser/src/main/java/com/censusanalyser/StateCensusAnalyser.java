@@ -16,6 +16,8 @@ import com.google.gson.Gson;
 public class StateCensusAnalyser
 {
 
+	private List<CSVStateCensus> censusCSVList;
+
 	/**
 	 * @param stateCensusCsvFilePath
 	 * @return count of states
@@ -33,8 +35,8 @@ public class StateCensusAnalyser
 				throw new CSVException(CSVException.ExceptionType.WRONG_FILE_TYPE);
 			}
 
-			ICSVBuilder csvBuilder = CSVBuilderFactory.createCSVBuilder();
-			List censusCSVList = csvBuilder.getCSVFileList(reader, CSVStateCensus.class);
+			ICSVBuilder<CSVStateCensus> csvBuilder = CSVBuilderFactory.createCSVBuilder();
+			censusCSVList = csvBuilder.getCSVFileList(reader, CSVStateCensus.class);
 
 			return censusCSVList.size();
 		}
@@ -100,27 +102,11 @@ public class StateCensusAnalyser
 	 */
 	public String sortCensusByState(String csvFilePath) throws CSVException
 	{
-		String[] file = csvFilePath.split("[.]");
-		try (BufferedReader reader = Files.newBufferedReader(Paths.get(csvFilePath)))
-		{
-			if (!file[1].equals("csv"))
-			{
-				throw new CSVException("Wrong File type", CSVException.ExceptionType.WRONG_FILE_TYPE);
-			}
-			List<CSVStateCensus> stateCensusList = CSVBuilderFactory.createCSVBuilder().getCSVFileList(reader,
-					CSVStateCensus.class);
-			Collections.sort(stateCensusList, Comparator.comparing(census -> census.state));
-
-			return new Gson().toJson(stateCensusList);
-		}
-		catch (IOException e)
-		{
-			throw new CSVException("Incorrect csv file path", CSVException.ExceptionType.WRONG_CSV_FILE);
-		}
-		catch (RuntimeException e)
-		{
-			throw new CSVException(e.getCause().getMessage(), CSVException.ExceptionType.INVALIDFILEDATA);
-		}
+		loadStatesCSVData(csvFilePath);
+		if (censusCSVList == null || censusCSVList.size() == 0)
+			throw new CSVException("No Census data found", CSVException.ExceptionType.NO_CENSUS_DATA);
+		Collections.sort(censusCSVList, Comparator.comparing(census -> census.state));
+		return new Gson().toJson(censusCSVList);
 
 	}
 
